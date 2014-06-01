@@ -30,6 +30,7 @@ class Controller_Welcome extends Controller
 	 */
 	public function action_index()
 	{
+		$auth = Auth::instance();
 		return Response::forge(View::forge('welcome/index'));
 	}
 
