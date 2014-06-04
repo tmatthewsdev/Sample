@@ -42,4 +42,14 @@ class Model_Client extends Orm\Model
 			'mysql_timestamp' => true,
 		),
 	);
+
+
+	/**
+	 * 
+	 */
+	public static function get_by_url($url)
+	{
+		return static::query()->where('url', $url)->get_one();
+	}
+
 }

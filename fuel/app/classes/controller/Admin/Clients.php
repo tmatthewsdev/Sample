@@ -3,33 +3,41 @@
 /**
  * 
  */
-class Controller_Admin_Clients extends Controller_Template
+class Controller_Admin_Clients extends Controller_Admin_AbstractController
 {
-	/**
-	 * 
-	 */
-	public $template = 'admin/template';
-
-	/**
-	 * 
-	 */
-	public function before()
-	{
-		parent::before();
-
-		$this->auth = Auth::instance();
-
-		if (! $this->auth->check())
-		{
-			throw new Exception("Not logged in");
-		}
-	}
-
 	/**
 	 * 
 	 */
 	public function get_index()
 	{
-		$this->template->content = 'hello';
+		$this->template->content = View::forge('admin/clients/index');
+		
+		$this->template->content->clients = Model_Client::query()->get();
+
+
+	}
+
+	/**
+	 * 
+	 */
+	public function get_add()
+	{
+		$this->template->content = View::forge('admin/clients/add');
+	}
+
+	/**
+	 * 
+	 */
+	public function post_add()
+	{
+		$name = Input::post('name');
+		$url  = Input::post('url');
+
+		$client = new Model_Client;
+		$client->name = $name;
+		$client->url  = $url;
+		$client->save();
+
+		Response::redirect('admin/clients');
 	}
 }
